@@ -140,3 +140,68 @@
 .delete-btn {
 	background-color: #ef4444 !important;
 }
+
+
+.success-message {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px;
+	margin-top: 10px;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 16px;
+}
+
+/* Style for the search input */
+.search-input {
+	margin: 20px 0;
+	padding: 10px 15px;
+	width: 250px;
+	border: 1px solid #ddd;
+	border-radius: 25px;
+	outline: none;
+	font-size: 16px;
+	transition: border-color 0.3s;
+}
+
+.search-input:focus {
+	border-color: #4a90e2;
+	box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
+}
+
+/* Pagination container */
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-top: 30px;
+}
+
+/* Pagination buttons */
+.pagination button {
+	background-color: #4a90e2;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	transition: background-color 0.3s;
+}
+
+.pagination button:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+	background-color: #357abd;
+}
+
+.pagination span {
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+}

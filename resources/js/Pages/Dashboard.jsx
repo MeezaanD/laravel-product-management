@@ -8,12 +8,16 @@ import '../../css/Dashboard.css';
 const Dashboard = () => {
 	const { auditLogsUrl } = usePage().props;
 
-	console.log(auditLogsUrl);
-
 	const [products, setProducts] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const [currentProduct, setCurrentProduct] = useState(null);
+	const [successMessage, setSuccessMessage] = useState(''); // State for success message
+	const [currentPage, setCurrentPage] = useState(1); // Current page number
+	const [searchQuery, setSearchQuery] = useState(''); // Search query for filtering
+
+	// Number of products per page
+	const productsPerPage = 5;
 
 	useEffect(() => {
 		axios.get('/products')
@@ -26,13 +30,20 @@ const Dashboard = () => {
 	}, []);
 
 	const handleDelete = (id) => {
-		axios.delete(`/products/${id}`)
-			.then(() => {
-				setProducts(products.filter(product => product.id !== id));
-			})
-			.catch(error => {
-				console.error('Error deleting product:', error);
-			});
+		const confirmDelete = window.confirm('Are you sure you want to delete this product?');
+		if (confirmDelete) {
+			axios.delete(`/products/${id}`)
+				.then(() => {
+					setProducts(products.filter(product => product.id !== id));
+					setSuccessMessage('Product deleted successfully!');
+					setTimeout(() => {
+						setSuccessMessage('');
+					}, 3000);
+				})
+				.catch(error => {
+					console.error('Error deleting product:', error);
+				});
+		}
 	};
 
 	const openModal = (product = null) => {
@@ -51,21 +62,45 @@ const Dashboard = () => {
 			});
 	};
 
+	const filteredProducts = products.filter(product =>
+		product.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
+	// Paginate the filtered products
+	const paginatedProducts = filteredProducts.slice(
+		(currentPage - 1) * productsPerPage,
+		currentPage * productsPerPage
+	);
+
+	// Calculate total pages
+	const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
 	return (
 		<div className="dashboard">
 			<h1>Product Dashboard</h1>
 
-			<div className="page-buttons">
-			<Link href={auditLogsUrl} className="btn">
-				View Audit Logs
-			</Link>
+			{successMessage && <div className="success-message">{successMessage}</div>}
 
-			<button onClick={() => openModal()} className="add-product-btn btn-icon">
+			<div className="page-buttons">
+				<Link href={auditLogsUrl} className="btn">
+					View Audit Logs
+				</Link>
+
+				<button onClick={() => openModal()} className="add-product-btn btn-icon">
 					<FaPlus /> <span>Add Product</span>
-			</button>
+				</button>
 			</div>
 
+			{/* Search Filter */}
+			<input
+				type="text"
+				placeholder="Search products by name"
+				value={searchQuery}
+				onChange={(e) => setSearchQuery(e.target.value)}
+				className="search-input"
+			/>
 
+			{/* Product Table */}
 			<table className="product-list">
 				<thead>
 					<tr>
@@ -77,7 +112,7 @@ const Dashboard = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{products.map(product => (
+					{paginatedProducts.map(product => (
 						<tr key={product.id}>
 							<td>{product.name}</td>
 							<td>R{product.price}</td>
@@ -95,6 +130,21 @@ const Dashboard = () => {
 					))}
 				</tbody>
 			</table>
+
+			{/* Pagination Controls */}
+			<div className="pagination">
+				<button
+					onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+					disabled={currentPage === 1}>
+					Previous
+				</button>
+				<span>Page {currentPage} of {totalPages}</span>
+				<button
+					onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+					disabled={currentPage === totalPages}>
+					Next
+				</button>
+			</div>
 
 			<ProductModal
 				showModal={showModal}

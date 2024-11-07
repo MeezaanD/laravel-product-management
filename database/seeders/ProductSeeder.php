@@ -9,11 +9,17 @@ class ProductSeeder extends Seeder
 {
     public function run()
     {
-        Product::create([
-            'name' => 'Product 1',
-            'price' => 19.99,
-            'description' => 'Description for product 1.',
-            'stock_quantity' => 100, 
-        ]);
+        // Generate 20 sample products
+        foreach (range(1, 20) as $index) {
+            Product::create([
+                'name' => 'Product ' . $index,
+                'price' => rand(10, 100),  // Random price between 10 and 100
+                'description' => 'Description for product ' . $index . '.',
+                'stock_quantity' => rand(10, 200),
+            ]);
+        }
     }
 }
+
+// RUN THIS COMMAND TO GENERATE SAMPLE PRODUCTS 
+// php artisan db:seed --class=ProductSeeder

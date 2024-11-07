@@ -10,6 +10,7 @@ const ProductModal = ({ showModal, setShowModal, isEditing, currentProduct, setP
 		stock_quantity: '',
 	});
 	const [errorMessage, setErrorMessage] = useState('');
+	const [successMessage, setSuccessMessage] = useState(''); 
 
 	// Reset the form when the modal is closed or opened in "Add" mode
 	useEffect(() => {
@@ -35,6 +36,7 @@ const ProductModal = ({ showModal, setShowModal, isEditing, currentProduct, setP
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrorMessage('');
+		setSuccessMessage(''); // Reset success message before trying a new action
 
 		// Validation: Check if fields are filled
 		if (!productData.name || !productData.price || !productData.stock_quantity) {
@@ -50,6 +52,10 @@ const ProductModal = ({ showModal, setShowModal, isEditing, currentProduct, setP
 						product.id === currentProduct.id ? response.data : product
 					));
 					setShowModal(false);
+					setSuccessMessage('Product updated successfully!');
+					setTimeout(() => {
+						setSuccessMessage('');
+					}, 3000);
 				})
 				.catch(error => {
 					console.error('Error updating product:', error);
@@ -61,6 +67,12 @@ const ProductModal = ({ showModal, setShowModal, isEditing, currentProduct, setP
 				.then(response => {
 					setProducts([...products, response.data]);
 					setShowModal(false);
+					setSuccessMessage('Product created successfully!'); // Show success message
+
+					// Clear success message after 3 seconds
+					setTimeout(() => {
+						setSuccessMessage('');
+					}, 3000);
 				})
 				.catch(error => {
 					console.error('Error creating product:', error);
@@ -69,12 +81,14 @@ const ProductModal = ({ showModal, setShowModal, isEditing, currentProduct, setP
 		}
 	};
 
+
 	return (
 		showModal && (
 			<div className="modal">
 				<div className="modal-content">
 					<h2>{isEditing ? 'Edit Product' : 'Create Product'}</h2>
 					{errorMessage && <p className="error-message">{errorMessage}</p>}
+					{successMessage && <p className="success-message">{successMessage}</p>}
 					<form onSubmit={handleSubmit}>
 						<div>
 							<label>Name</label>
