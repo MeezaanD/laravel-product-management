@@ -15,7 +15,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'store']);
 });
 
-// Protected routes (only accessible to authenticated users)
+// Protected routes (only accessible to authenticated users IF LOGGED IN)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard', [

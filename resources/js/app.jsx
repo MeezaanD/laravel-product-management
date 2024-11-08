@@ -2,10 +2,9 @@ import { createInertiaApp } from '@inertiajs/inertia-react';
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, useLocation } from 'react-router-dom';
-import Navbar from './Components/Navbar'; // Import your Navbar component
+import Navbar from './Components/Navbar';
 import '../css/app.css';
 
-// Custom component to handle conditional rendering of Navbar
 function AppWithConditionalNavbar({ App, props }) {
 	const location = useLocation();
 
