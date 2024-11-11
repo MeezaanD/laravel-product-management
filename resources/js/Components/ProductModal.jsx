@@ -36,7 +36,7 @@ const ProductModal = ({ showModal, setShowModal, isEditing, currentProduct, setP
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrorMessage('');
-		setSuccessMessage(''); // Reset success message before trying a new action
+		setSuccessMessage('');
 
 		// Validation: Check if fields are filled
 		if (!productData.name || !productData.price || !productData.stock_quantity) {
