@@ -6,75 +6,111 @@ A Laravel application for managing products, including features for creating, ed
 
 ## Prerequisites
 
-Before running the application, make sure you have the following installed:
+Before running the application, ensure you have the following installed:
 
-- **PHP** (preferably 8.x or above)
+- **PHP** (8.x or above recommended)
 - **Composer** (PHP package manager)
 - **Laravel** (for developing and running the Laravel application)
 - **SQLite** (for local database setup)
-- **Node.js and npm** (for managing frontend dependencies)
+- **Node.js & npm** (for managing frontend dependencies)
 
 ---
 
-## Steps to Clone and Run the Application
+## Installation & Setup
+
+### 1. Clone the Repository
+
+Clone the repository to your local machine using Git:
 
 ```bash
-
-1. Clone the Repository
-
-Start by cloning the repository to your local machine using Git.
-
 git clone https://github.com/MeezaanD/laravel-product-management
-After cloning, navigate to the project directory:
+```
 
+Navigate to the project directory:
+
+```bash
 cd laravel-product-management
+```
 
-2. Install Dependencies
-Install the PHP dependencies using Composer:
+### 2. Install Dependencies
 
+Install PHP dependencies using Composer:
+
+```bash
 composer install
-This will install all required PHP libraries for the backend.
+```
 
-Next, install the frontend dependencies with npm:
+Install frontend dependencies using npm:
 
+```bash
 npm install
-This will install the necessary packages for the frontend (CSS, JavaScript, etc.).
+```
 
-3. Set Up the Environment
-Copy the .env.example file to create your own environment configuration file:
+### 3. Configure Environment
 
+Copy the example environment file:
+
+```bash
 cp .env.example .env
+```
 
-Open the .env file and set up the SQLite database by ensuring the following line is present:
+Set up the SQLite database by ensuring the following line is present in `.env`:
+
+```plaintext
 DB_CONNECTION=sqlite
+```
+
 Create the SQLite database file:
 
+```bash
 touch database/database.sqlite
-4. Generate Application Key
+```
+
+### 4. Generate Application Key
+
 Generate the Laravel application key for secure encryption:
 
+```bash
 php artisan key:generate
-This will automatically set the APP_KEY in the .env file.
+```
 
-5. Run Migrations
-Run the migrations to set up the database schema:
+### 5. Run Migrations
 
+Set up the database schema by running migrations:
+
+```bash
 php artisan migrate
-This will create the necessary tables for managing products in the SQLite database.
+```
 
-Running the Application
-Now that everything is set up, you can run the Laravel development server:
+---
 
+## Running the Application
+
+Start the Laravel development server:
+
+```bash
 php artisan serve
-This will start the application at http://localhost:8000. AND BEGIN FROM HERE
+```
 
-Frontend Development
-To compile and watch frontend assets, use the following command:
+The application will be available at **http://localhost:8000**.
 
+---
+
+## Frontend Development
+
+To compile and watch frontend assets during development:
+
+```bash
 npm run dev
-This will start the development environment, which will automatically refresh your browser whenever changes are made.
+```
 
-If you want to prepare the assets for production, run:
+For production optimization and minification of frontend assets:
 
+```bash
 npm run build
-This will optimize and minify the frontend assets for a production environment.
+```
+
+---
+
+### Happy Coding! 🚀
+
